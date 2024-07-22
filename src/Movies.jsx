@@ -9,12 +9,14 @@ import { format } from 'date-fns';
 
 // todo:
 // use env file for url, etc.
-// use react query
-// can only filter on one genre at a time using rest query param, api limitations limit some functionality
-// error handling
+// use react query (caching)
+// use true filters, can only filter on one genre at a time using rest query param, api limitations limit some functionality
+// robust error handling
 // breakout components
-// loading indicator
-// styling
+// better loading indicator
+// more styling
+// accessibility
+// better state management
 
 const baseUrl = 'https://0kadddxyh3.execute-api.us-east-1.amazonaws.com';
 
@@ -55,9 +57,8 @@ function Movies() {
   );
 
   const handleSetPage = useCallback((page) => {
-    console.log('page: ' + page);
     setPageCurrent(page);
-  }, []);
+  });
 
   useEffect(() => {
     const fetchTokenAndGenres = async () => {
@@ -87,18 +88,26 @@ function Movies() {
   });
 
   const fetchMovies = async () => {
-    if (searchRef.current?.value.length < 2 || authToken === '') return;
-    const moviesResponse = await fetch(baseUrl + `/movies?search=${searchRef.current?.value}&page=${pageCurrent}&limit=${perPageRef.current?.value}&genre=${searchGenre.current?.value}`, {
-      headers: { Authorization: `Bearer ${authToken}` },
-    });
-    const moviesResponseJson = await moviesResponse.json();
-    setMoviesArray(moviesResponseJson.data);
-    setPageTotal(moviesResponseJson.totalPages);
-    const moviesCount = await fetch(baseUrl + `/movies?search=${searchRef.current?.value}&page=1&limit=1000&genre=${searchGenre.current?.value}`, {
-      headers: { Authorization: `Bearer ${authToken}` },
-    });
-    const moviesCountJson = await moviesCount.json();
-    setMoviesCount(moviesCountJson.data);
+    // no auth token return
+    if (authToken === '') return;
+    // search min 2 chars, API search will not work so reset
+    if (searchRef.current?.value.length < 2) {
+      setMoviesArray([]);
+      setPageTotal(0);
+      setMoviesCount([]);
+    } else {
+      const moviesResponse = await fetch(baseUrl + `/movies?search=${searchRef.current?.value}&page=${pageCurrent}&limit=${perPageRef.current?.value}&genre=${searchGenre.current?.value}`, {
+        headers: { Authorization: `Bearer ${authToken}` },
+      });
+      const moviesResponseJson = await moviesResponse.json();
+      setMoviesArray(moviesResponseJson.data);
+      setPageTotal(moviesResponseJson.totalPages);
+      const moviesCount = await fetch(baseUrl + `/movies?search=${searchRef.current?.value}&page=1&limit=1000&genre=${searchGenre.current?.value}`, {
+        headers: { Authorization: `Bearer ${authToken}` },
+      });
+      const moviesCountJson = await moviesCount.json();
+      setMoviesCount(moviesCountJson.data);
+    }
   };
 
   return (
@@ -113,7 +122,7 @@ function Movies() {
         </div>
         <div className='flex flex-row gap-2 p-4'>
           <input ref={searchRef} className='flex-grow p-2 border-b-2 border-black focus:outline-none' type='text' placeholder='Search movie titles...' onChange={debouncedSearch} maxLength={25} />
-          <select ref={searchGenre} onChange={fetchMovies} className='min-w-48 focus:outline-none'>
+          <select ref={searchGenre} onChange={fetchMovies} className='min-w-48 focus:outline-none cursor-pointer'>
             <option value=''>All Genres</option>
             {genresArray.map((genre) => (
               <option key={genre.id} value={genre.title}>
@@ -151,32 +160,32 @@ function Movies() {
       </div>
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title={movieDetails.title} poster={movieDetails.posterUrl}>
         <div className='mb-2'>{movieDetails.summary}</div>
-        <div className=''>
+        <div className='mb-2'>
           <span className='font-semibold pr-2'>Rating:</span>
           {movieDetails.rating}
         </div>
-        <div className=''>
+        <div className='mb-2'>
           <span className='font-semibold pr-2'>Published:</span>
-          {format(movieDetails.datePublished, 'MMMM dd, yyyy')}
+          {movieDetails.datePublished ? format(movieDetails.datePublished, 'MMMM dd, yyyy') : undefined}
         </div>
-        <ul className='flex flex-row'>
+        <div className='mb-2 flex flex-row'>
           <span className='font-semibold pr-2'>Starring:</span>
           {movieDetails.mainActors?.map((o, i) => (
-            <li key={i}>
+            <>
               {o}
-              {i < movieDetails.mainActors.length - 1 && <span>,&nbsp;</span>}
-            </li>
+              {i < movieDetails.mainActors.length - 1 && <>,&nbsp;</>}
+            </>
           ))}
-        </ul>
-        <ul className='flex flex-row'>
+        </div>
+        <div className='mb-2 flex flex-row'>
           <span className='font-semibold pr-2'>Writers:</span>
           {movieDetails.writers?.map((o, i) => (
-            <li key={i}>
+            <>
               {o}
-              {i < movieDetails.writers.length - 1 && <span>,&nbsp;</span>}
-            </li>
+              {i < movieDetails.writers.length - 1 && <>,&nbsp;</>}
+            </>
           ))}
-        </ul>
+        </div>
       </Modal>
     </>
   );
