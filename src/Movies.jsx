@@ -7,8 +7,11 @@ import Modal from './Modal';
 // todo:
 // use env file for url, etc.
 // use react query
-// can only filter on one genre at a time using rest query param
+// can only filter on one genre at a time using rest query param, api limitations limit some functionality
 // error handling
+// breakout components
+// loading indicator
+// styling
 
 const baseUrl = 'https://0kadddxyh3.execute-api.us-east-1.amazonaws.com';
 
