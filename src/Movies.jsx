@@ -1,14 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-import { useState, useEffect, useCallback, useMemo, memo, useRef } from 'react';
-import { Search, Film } from 'lucide-react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import Pagination from './Pagination';
 import Modal from './Modal';
 
 // todo:
 // use env file for url, etc.
 // use react query
-// can only filter on one genre at a time.
+// can only filter on one genre at a time using rest query param
+// error handling
 
 const baseUrl = 'https://0kadddxyh3.execute-api.us-east-1.amazonaws.com';
 
