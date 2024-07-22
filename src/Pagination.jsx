@@ -9,7 +9,7 @@ function Pagination(props) {
     if (i === props.pageCurrent) {
       pageLinks.push(
         <li key={i} className='flex items-center rounded-lg border-black border-2'>
-          <a href='#' className='font-bold p-2' title={`Show Page ${i}`}>
+          <a href='#' className='font-bold p-2 focus:outline-none' title={`Show Page ${i}`}>
             {i}
           </a>
         </li>
@@ -17,7 +17,7 @@ function Pagination(props) {
     } else if (i >= props.pageCurrent - 3 && i <= props.pageCurrent + 3) {
       pageLinks.push(
         <li key={i} className='flex items-center rounded-lg border-black border-2'>
-          <a href='#' onClick={() => props.handleSetPage(i)} className='p-2' title={`Show Page ${i}`}>
+          <a href='#' onClick={() => props.handleSetPage(i)} className='p-2 focus:outline-none' title={`Show Page ${i}`}>
             {i}
           </a>
         </li>
@@ -26,14 +26,14 @@ function Pagination(props) {
   }
   if (props.pageCurrent + 4 <= props.pageTotal) {
     pageLinks.push(
-      <li key='x' className='text-slate-400'>
+      <li key='x' className='text-slate-400 focus:outline-none'>
         ...
       </li>
     );
   }
   if (props.pageCurrent - 4 >= 1) {
     pageLinks.unshift(
-      <li key='y' className='text-slate-400'>
+      <li key='y' className='text-slate-400 focus:outline-none'>
         ...
       </li>
     );
@@ -48,13 +48,13 @@ function Pagination(props) {
       <ul className='flex flex-row list-none gap-2'>
         {props.pageCurrent > 1 ? (
           <li className='flex items-center rounded-lg border-2 border-black'>
-            <a href='#' onClick={() => handleSetPage(props.pageCurrent - 1)} className='p-2' title='Show Previous Page'>
+            <a href='#' onClick={() => handleSetPage(props.pageCurrent - 1)} className='p-2 focus:outline-none' title='Show Previous Page'>
               Prev
             </a>
           </li>
         ) : (
           <li className='flex items-center rounded-lg border-2 border-slate-400'>
-            <a href='#' className='text-slate-400 p-2' title='Show Previous Page'>
+            <a href='#' className='text-slate-400 p-2 focus:outline-none' title='Show Previous Page'>
               Prev
             </a>
           </li>
@@ -62,13 +62,13 @@ function Pagination(props) {
         {pageLinks.map((link) => link)}
         {props.pageCurrent < props.pageTotal ? (
           <li className='flex items-center rounded-lg border-2 border-black'>
-            <a href='#' onClick={() => handleSetPage(props.pageCurrent + 1)} className='p-2' title='Show Next Page'>
+            <a href='#' onClick={() => handleSetPage(props.pageCurrent + 1)} className='p-2 focus:outline-none' title='Show Next Page'>
               Next
             </a>
           </li>
         ) : (
           <li className='flex items-center rounded-lg border-2 border-slate-400'>
-            <a href='#' className='text-slate-400 p-2' title='Show Next Page'>
+            <a href='#' className='text-slate-400 p-2 focus:outline-none' title='Show Next Page'>
               Next
             </a>
           </li>

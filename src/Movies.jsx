@@ -1,8 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef, Suspense } from 'react';
 import Pagination from './Pagination';
 import Modal from './Modal';
+import Loading from './Loading';
+import { Smile, Meh, Frown } from 'lucide-react';
+import { format } from 'date-fns';
 
 // todo:
 // use env file for url, etc.
@@ -34,7 +37,6 @@ function Movies() {
   const searchGenre = useRef();
   const perPageRef = useRef();
 
-  const [isLoading, setIsLoading] = useState(false);
   const [authToken, setAuthToken] = useState('');
 
   const [genresArray, setGenresArray] = useState([]);
@@ -85,14 +87,14 @@ function Movies() {
   });
 
   const fetchMovies = async () => {
-    if (searchRef.current.value === '' || authToken === '') return;
+    if (searchRef.current?.value.length < 2 || authToken === '') return;
     const moviesResponse = await fetch(baseUrl + `/movies?search=${searchRef.current?.value}&page=${pageCurrent}&limit=${perPageRef.current?.value}&genre=${searchGenre.current?.value}`, {
       headers: { Authorization: `Bearer ${authToken}` },
     });
     const moviesResponseJson = await moviesResponse.json();
     setMoviesArray(moviesResponseJson.data);
     setPageTotal(moviesResponseJson.totalPages);
-    const moviesCount = await fetch(baseUrl + `/movies?search=${searchRef.current?.value}&page=1&limit=1000`, {
+    const moviesCount = await fetch(baseUrl + `/movies?search=${searchRef.current?.value}&page=1&limit=1000&genre=${searchGenre.current?.value}`, {
       headers: { Authorization: `Bearer ${authToken}` },
     });
     const moviesCountJson = await moviesCount.json();
@@ -110,8 +112,8 @@ function Movies() {
           <div className='flex-none'>{moviesCount.length} movies found</div>
         </div>
         <div className='flex flex-row gap-2 p-4'>
-          <input ref={searchRef} className='flex-grow p-2 border-b-2 border-black' type='text' placeholder='Search for a movie...' onChange={debouncedSearch} maxLength={25} />
-          <select ref={searchGenre} onChange={fetchMovies} className='min-w-48'>
+          <input ref={searchRef} className='flex-grow p-2 border-b-2 border-black focus:outline-none' type='text' placeholder='Search movie titles...' onChange={debouncedSearch} maxLength={25} />
+          <select ref={searchGenre} onChange={fetchMovies} className='min-w-48 focus:outline-none'>
             <option value=''>All Genres</option>
             {genresArray.map((genre) => (
               <option key={genre.id} value={genre.title}>
@@ -120,41 +122,42 @@ function Movies() {
             ))}
           </select>
         </div>
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
-          {moviesArray.map((movie) => (
-            <div key={movie.id} className='cursor-pointer flex flex-col justify-center' onClick={() => fetchMovieDetails(movie.id)}>
-              <h3 className='flex justify-center font-bold text-sm'>{movie.title}</h3>
-              {movie.rating ? <div className='flex justify-center text-sm'>Rated {movie.rating}</div> : <div className='flex justify-center text-sm'>Not Rated</div>}
-              <div className='flex justify-center'>{movie.posterUrl ? <img src={movie.posterUrl} width='100' height='150' alt={`${movie.title} Movie Poster`} /> : <img src='no-poster.webp' width='100' height='150' alt={`${movie.title} Movie Poster (Not Available)`} />}</div>
-            </div>
-          ))}
-        </div>
-        <div className='flex align-center gap-2 p-4'>
-          <div className='align-bottom my-auto no-wrap'>
-            Show{' '}
-            <select ref={perPageRef} onChange={fetchMovies}>
-              <option value='25'>25</option>
-              <option value='50'>50</option>
-              <option value='100'>100</option>
-              <option value='1000'>All</option>
-            </select>{' '}
-            Movies
+        <Suspense fallback={<Loading />}>
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
+            {moviesArray.map((movie) => (
+              <div key={movie.id} className='cursor-pointer flex flex-col justify-center' onClick={() => fetchMovieDetails(movie.id)}>
+                <h3 className='flex justify-center font-bold text-sm'>{movie.title}</h3>
+                {movie.rating ? <div className='flex justify-center text-sm'>Rated {movie.rating}</div> : <div className='flex justify-center text-sm'>Not Rated</div>}
+                <div className='flex justify-center'>{movie.posterUrl ? <img src={movie.posterUrl} width='100' height='150' alt={`${movie.title} Movie Poster`} /> : <img src='no-poster.webp' width='100' height='150' alt={`${movie.title} Movie Poster (Not Available)`} />}</div>
+              </div>
+            ))}
           </div>
-          <div className='flex flex-grow justify-end gap-2 text-sm'>{perPageRef.current?.value != 1000 ? <Pagination pageTotal={pageTotal} pageCurrent={pageCurrent} handleSetPage={handleSetPage} /> : ''}</div>
-        </div>
+        </Suspense>
+        {moviesArray.length ? (
+          <div className='flex align-center gap-2 p-4'>
+            <div className='align-bottom my-auto no-wrap'>
+              Show{' '}
+              <select ref={perPageRef} onChange={fetchMovies} className='focus:outline-none'>
+                <option value='25'>25</option>
+                <option value='50'>50</option>
+                <option value='100'>100</option>
+                <option value='1000'>All</option>
+              </select>{' '}
+              Per Page
+            </div>
+            <div className='flex flex-grow justify-end gap-2 text-sm'>{perPageRef.current?.value != 1000 ? <Pagination pageTotal={pageTotal} pageCurrent={pageCurrent} handleSetPage={handleSetPage} /> : ''}</div>
+          </div>
+        ) : undefined}
       </div>
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title={movieDetails.title} poster={movieDetails.posterUrl}>
-        <div className='mb-2'>
-          {movieDetails.summary}
-          <span className='text-slate-400 italic text-xs ml-4'>Running time 1 hour 35 minutes {movieDetails.duration}</span>
-        </div>
-        <div className=''>
-          <span className='font-semibold pr-2'>Published:</span>
-          {movieDetails.datePublished}
-        </div>
+        <div className='mb-2'>{movieDetails.summary}</div>
         <div className=''>
           <span className='font-semibold pr-2'>Rating:</span>
           {movieDetails.rating}
+        </div>
+        <div className=''>
+          <span className='font-semibold pr-2'>Published:</span>
+          {format(movieDetails.datePublished, 'MMMM dd, yyyy')}
         </div>
         <ul className='flex flex-row'>
           <span className='font-semibold pr-2'>Starring:</span>
@@ -174,10 +177,6 @@ function Movies() {
             </li>
           ))}
         </ul>
-        <div className=''>
-          <span className='font-semibold pr-2'>Rating:</span>
-          {movieDetails.ratingValue} use icons here
-        </div>
       </Modal>
     </>
   );
