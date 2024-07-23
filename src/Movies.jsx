@@ -1,9 +1,8 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-unused-vars */
-import { useState, useEffect, useCallback, useRef, useMemo, memo, Suspense } from 'react';
+import { useState, useEffect, useCallback, useRef, Suspense } from 'react';
 import Pagination from './Pagination';
 import Modal from './Modal';
 import Loading from './Loading';
+import NoPoster from './assets/NoPoster';
 import { Clapperboard } from 'lucide-react';
 import { format } from 'date-fns';
 
@@ -130,7 +129,7 @@ function Movies() {
             {moviesArray.map((movie) => (
               <div key={movie.id} className='cursor-pointer flex flex-col justify-between border-2 rounded-xl p-2 border-black' onClick={() => fetchMovieDetails(movie.id)}>
                 <h3 className='text-pretty font-bold h-18 px-2'>{movie.title}</h3>
-                <div className='flex justify-center m-h-[150px]'>{movie.posterUrl ? <img src={movie.posterUrl} width='100' height='150' alt={`${movie.title} Movie Poster`} /> : <img src='no-poster.webp' width='100' height='150' alt={`${movie.title} Movie Poster (Not Available)`} />}</div>
+                <div className='flex justify-center m-h-[150px]'>{movie.posterUrl ? <img src={movie.posterUrl} width='100' height='150' alt={`${movie.title} Movie Poster`} /> : <NoPoster title={movie.title} />}</div>
               </div>
             ))}
           </div>
