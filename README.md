@@ -1,6 +1,24 @@
 # ThisDot Movie Search
 
-# Not final
+# To Do
+
+- convert to TypeScript.
+- configure env file for better deployments, apis, etc.
+- use react query (caching)
+
+* total movie count requires extra REST call with page size = 1, limit = 1000
+* genre list requires extra REST call to get all drama types
+
+- use filters (checkboxes) on left side or slide out.
+
+* query param take one Genre at a time forced use select.
+
+- add robust error handling
+- breakout components, will require more complete state mangement (zustand possibly)
+- better loading indicator
+- more styling, better responsive
+- add accessibility
+- more edge case testing, missing data, poster size, etc.
 
 README, please include details about the following: ○ Highlight something in your project that you thought was especially interesting or significant to your overall implementation. ○ Tell us what you are most pleased or proud of with your implementation. ○ Given more time, what next feature or improvement would you like to add to your project?
 

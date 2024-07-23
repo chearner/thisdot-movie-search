@@ -4,7 +4,7 @@
 
 .bg-ken-burns {
   background-size: 100%;
-  animation: kenBurns 60s ease infinite;
+  animation: kenBurns 20s linear infinite;
 }
 
 @keyframes kenBurns {
@@ -12,7 +12,7 @@
     background-size: 100%;
   }
   50% {
-    background-size: 120%;
+    background-size: 150%;
   }
   100% {
     background-size: 100%;
@@ -20,11 +20,11 @@
 }
 
 .pan-topleft {
-  animation: kenBurns 20s ease infinite, panTopLeft 20s ease infinite;
+  animation: kenBurns 40s linear infinite, panTopLeft 40s linear infinite;
 }
 
 .pan-bottomright {
-  animation: kenBurns 20s ease infinite, panBottomRight 20s ease infinite;
+  animation: kenBurns 40s linear infinite, panBottomRight 40s linear infinite;
 }
 
 @keyframes panTopLeft {
