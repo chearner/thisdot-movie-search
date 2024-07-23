@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-import { useState, useEffect, useCallback, useRef, Suspense } from 'react';
+import { useState, useEffect, useCallback, useRef, useMemo, memo, Suspense } from 'react';
 import Pagination from './Pagination';
 import Modal from './Modal';
 import Loading from './Loading';
@@ -63,15 +63,19 @@ function Movies() {
   }, []);
 
   // this gets movie details on click
-  const fetchMovieDetails = useCallback(async (id) => {
-    if (authToken === '') return;
-    const movieDetailsResponse = await fetch(baseUrl + `/movies/${id}`, {
-      headers: { Authorization: `Bearer ${authToken}` },
-    });
-    const moviesDetailResponseJson = await movieDetailsResponse.json();
-    setMovieDetails(moviesDetailResponseJson);
-    setIsModalOpen(true);
-  }, []);
+  const fetchMovieDetails = useCallback(
+    async (id) => {
+      console.log(id);
+      if (authToken === '') return;
+      const movieDetailsResponse = await fetch(baseUrl + `/movies/${id}`, {
+        headers: { Authorization: `Bearer ${authToken}` },
+      });
+      const moviesDetailResponseJson = await movieDetailsResponse.json();
+      setMovieDetails(moviesDetailResponseJson);
+      setIsModalOpen(true);
+    },
+    [authToken]
+  );
 
   // this get movies on input change, genre change, pagination click or results per page change
   const fetchMovies = async (page) => {
@@ -146,7 +150,7 @@ function Movies() {
         </div>
       </div>
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title={movieDetails.title} poster={movieDetails.posterUrl} rating={movieDetails.rating}>
-        <div className='mb-2'>{movieDetails.summary}</div>
+        <div className='mb-2 text-xl'>{movieDetails.summary}</div>
         <div className='mb-2'>
           <span className='font-semibold pr-2'>Published:</span>
           {movieDetails.datePublished ? format(movieDetails.datePublished, 'MMMM dd, yyyy') : undefined}
