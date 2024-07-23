@@ -3,50 +3,28 @@
 @tailwind utilities;
 
 .bg-ken-burns {
-  background-size: 100%;
-  animation: kenBurns 20s linear infinite;
+  animation: kenBurns 50s linear 1s infinite reverse;
 }
 
 @keyframes kenBurns {
   0% {
     background-size: 100%;
+    background-position: top left;
+  }
+  25% {
+    background-size: 125%;
+    background-position: bottom right;
   }
   50% {
-    background-size: 150%;
+    background-size: 100%;
+    background-position: top right;
+  }
+  75% {
+    background-size: 125%;
+    background-position: bottom left;
   }
   100% {
     background-size: 100%;
-  }
-}
-
-.pan-topleft {
-  animation: kenBurns 40s linear infinite, panTopLeft 40s linear infinite;
-}
-
-.pan-bottomright {
-  animation: kenBurns 40s linear infinite, panBottomRight 40s linear infinite;
-}
-
-@keyframes panTopLeft {
-  0% {
-    background-position: center center;
-  }
-  50% {
     background-position: top left;
-  }
-  100% {
-    background-position: center center;
-  }
-}
-
-@keyframes panBottomRight {
-  0% {
-    background-position: center center;
-  }
-  50% {
-    background-position: bottom right;
-  }
-  100% {
-    background-position: center center;
   }
 }
