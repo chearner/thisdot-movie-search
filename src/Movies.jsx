@@ -23,6 +23,7 @@ function debounce(func, wait) {
 function Movies() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  // use ref to avoid tracking unneeded state, better state ultimately would be needed.
   const searchRef = useRef();
   const searchGenre = useRef();
   const perPageRef = useRef();
@@ -64,7 +65,6 @@ function Movies() {
   // this gets movie details on click
   const fetchMovieDetails = useCallback(
     async (id) => {
-      console.log(id);
       if (authToken === '') return;
       const movieDetailsResponse = await fetch(baseUrl + `/movies/${id}`, {
         headers: { Authorization: `Bearer ${authToken}` },
