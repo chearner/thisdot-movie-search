@@ -2,22 +2,23 @@
 
 # ToDo
 
-- convert to TypeScript
+- no UI library to keep simple, shadcn/ui added unwanted complexity for exercise but might use UI library for a full featured app.
+- convert to TypeScript (original plan to add Three.js animations)
 - configure env file for better deployments, apis, etc.
-- use react query (caching)
+- use react query (caching, etc.)
 
 * total movie count requires extra REST call with page size = 1, limit = 1000
 * genre list requires extra REST call to get all drama types
 
-- use filters (checkboxes) on left side or slide out.
+- use filters (checkboxes) on left side or slide out panel.
 
 * query param take one Genre at a time forced use select.
 
-- add robust error handling
+- add error handling (try/catch, AbortController, error boundries)
 - smaller components, will require more complete state mangement to avoid prop drilling (zustand possibly)
-- better loading indicator
-- more styling
-- better responsive handling
+- better loading indicator (animation)
+- better design/layout
+- add more responsive cases
 - add accessibility
 - test more edge cases (missing data, poster sizes, etc.)
 
