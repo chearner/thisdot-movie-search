@@ -1,8 +1,12 @@
-function Pagination(props) {
-  const pageLinks = [];
+import { useSearchState, useSearchStateUpdate } from './SearchProvider';
 
-  for (let i = 1; i <= props.pageTotal; i++) {
-    if (i === props.pageNow) {
+function Pagination() {
+  let searchState = useSearchState();
+  let searchUpdateState = useSearchStateUpdate();
+  let pageLinks = [];
+
+  for (let i = 1; i <= searchState.pageCount; i++) {
+    if (i == searchState.pageNow) {
       pageLinks.push(
         <li key={i} className='flex items-center rounded-xl border-black border-2'>
           <a href='#' className='font-bold p-2 focus:outline-none' title={`Show Page ${i}`}>
@@ -10,10 +14,10 @@ function Pagination(props) {
           </a>
         </li>
       );
-    } else if (i >= props.pageNow - 3 && i <= props.pageNow + 3) {
+    } else if (i >= searchState.pageNow - 3 && i <= searchState.pageNow + 3) {
       pageLinks.push(
-        <li key={i} className='flex items-center rounded-xl border-black border-2'>
-          <a href='#' onClick={() => props.fetchMovies(i)} className='p-2 focus:outline-none' title={`Show Page ${i}`}>
+        <li key={i} className='flex items-center rounded-xl border-black border-2' onClick={() => searchUpdateState({ pageNow: i })}>
+          <a href='#' className='p-2 focus:outline-none' title={`Show Page ${i}`}>
             {i}
           </a>
         </li>
@@ -21,17 +25,17 @@ function Pagination(props) {
     }
   }
 
-  if (props.pageNow + 4 <= props.pageTotal) {
+  if (searchState.pageNow + 3 <= searchState.pageCount) {
     pageLinks.push(
-      <li key='x' className='text-slate-400 focus:outline-none'>
+      <li key='123' className='text-black font-bold focus:outline-none flex items-center'>
         ...
       </li>
     );
   }
 
-  if (props.pageNow - 4 >= 1) {
+  if (searchState.pageNow - 3 >= 1) {
     pageLinks.unshift(
-      <li key='y' className='text-slate-400 focus:outline-none'>
+      <li key='321' className='text-black font-bold focus:outline-none flex items-center'>
         ...
       </li>
     );
@@ -40,9 +44,9 @@ function Pagination(props) {
   return (
     <>
       <ul className='flex flex-row list-none gap-2'>
-        {props.pageNow > 1 ? (
-          <li className='flex items-center rounded-xl border-2 border-black'>
-            <a href='#' onClick={() => props.fetchMovies(props.pageNow - 1)} className='p-2 focus:outline-none' title='Show Previous Page'>
+        {searchState.pageNow > 1 ? (
+          <li className='flex items-center rounded-xl border-2 border-black' onClick={() => searchUpdateState({ pageNow: searchState.pageNow - 1 })}>
+            <a href='#' className='p-2 focus:outline-none' title='Show Previous Page'>
               Prev
             </a>
           </li>
@@ -54,9 +58,9 @@ function Pagination(props) {
           </li>
         )}
         {pageLinks.map((link) => link)}
-        {props.pageNow < props.pageTotal ? (
-          <li className='flex items-center rounded-xl border-2 border-black'>
-            <a href='#' onClick={() => props.fetchMovies(props.pageNow + 1)} className='p-2 focus:outline-none' title='Show Next Page'>
+        {searchState.pageNow < searchState.pageCount ? (
+          <li className='flex items-center rounded-xl border-2 border-black' onClick={() => searchUpdateState({ pageNow: searchState.pageNow + 1 })}>
+            <a href='#' className='p-2 focus:outline-none' title='Show Next Page'>
               Next
             </a>
           </li>

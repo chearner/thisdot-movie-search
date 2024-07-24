@@ -7,6 +7,9 @@ module.exports = {
   darkMode: ['class'],
   content: ['./pages/**/*.{js,jsx}', './components/**/*.{js,jsx}', './app/**/*.{js,jsx}', './src/**/*.{js,jsx}'],
   prefix: '',
+  varients: {
+    animation: ['hover', 'group-hover'],
+  },
   theme: {
     container: {
       center: true,
@@ -57,18 +60,18 @@ module.exports = {
         sm: 'calc(var(--radius) - 4px)',
       },
       keyframes: {
-        'accordion-down': {
-          from: { height: '0' },
-          to: { height: 'var(--radix-accordion-content-height)' },
-        },
-        'accordion-up': {
-          from: { height: 'var(--radix-accordion-content-height)' },
-          to: { height: '0' },
+        'rainbow-shadow': {
+          '0%, 100%': { boxShadow: '0 0 0 3px rgba(255, 0, 0, 0.7)' },
+          '14%': { boxShadow: '0 0 0 3px rgba(255, 127, 0, 0.7)' },
+          '28%': { boxShadow: '0 0 0 3px rgba(255, 255, 0, 0.7)' },
+          '42%': { boxShadow: '0 0 0 3px rgba(0, 255, 0, 0.7)' },
+          '57%': { boxShadow: '0 0 0 3px rgba(0, 0, 255, 0.7)' },
+          '71%': { boxShadow: '0 0 0 3px rgba(75, 0, 130, 0.7)' },
+          '85%': { boxShadow: '0 0 0 3px rgba(143, 0, 255, 0.7)' },
         },
       },
       animation: {
-        'accordion-down': 'accordion-down 0.2s ease-out',
-        'accordion-up': 'accordion-up 0.2s ease-out',
+        'rainbow-shadow': 'rainbow-shadow 5s linear infinite',
       },
     },
   },
