@@ -1,6 +1,7 @@
 import React from 'react';
 import { SquareX } from 'lucide-react';
 
+// move poster and rating later out to be generic modal component.
 const Modal = ({ isOpen, onClose, title, poster, rating, children }) => {
   if (!isOpen) return null;
 

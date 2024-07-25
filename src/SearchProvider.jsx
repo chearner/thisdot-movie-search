@@ -25,6 +25,7 @@ export function SearchProvider({ children }) {
     moviesArray: [],
     genresArray: [],
     detailsArray: [],
+    selectedMovieId: '',
   });
 
   function searchStateUpdate(newState) {
