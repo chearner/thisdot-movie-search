@@ -23,7 +23,7 @@ const DataLoader = (Component, url, props) => {
 
     if (isLoading) {
       return (
-        <div className='flex flex-row justify-center py-[100px]'>
+        <div className='flex justify-center w-full py-[50px]'>
           <div className='spinner'></div>
         </div>
       );

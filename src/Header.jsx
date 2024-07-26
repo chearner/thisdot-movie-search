@@ -1,5 +1,7 @@
 import { useCallback } from 'react';
-import { useSearchState, useSearchStateUpdate } from './SearchProvider';
+import { useSearchState, useSearchStateUpdate } from './DataProvider';
+import DataLoader from './DataLoader';
+import dataGenres from './data/genres';
 
 function Header() {
   let searchState = useSearchState();
@@ -30,7 +32,7 @@ function Header() {
       <input className='text-xl flex-grow px-4 py-2 text-slate-500 bg-slate-100 border-slate-200 border-2 rounded-xl focus:outline-none' type='text' placeholder='Search movie titles...' onChange={(e) => debouncedSearch(e.target.value)} maxLength={25} />
       <select onChange={(e) => searchUpdateState({ genreString: e.target.value })} className='min-w-48 focus:outline-none cursor-pointer text-slate-500 px-4 py-2 bg-slate-100 border-2 border-slate-200 rounded-xl'>
         <option value=''>Genre</option>
-        {searchState.genresArray.map((genre) => (
+        {dataGenres.data.map((genre) => (
           <option key={genre.id} value={genre.title}>
             {genre.title}
           </option>
@@ -40,4 +42,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default DataLoader(Header, dataGenres);

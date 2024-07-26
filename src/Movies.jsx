@@ -1,13 +1,12 @@
-import { useEffect, Suspense } from 'react';
-import Modal from './Modal';
-import Loading from './Loading';
-import { format } from 'date-fns';
-import Poster from './Poster';
+import { useEffect } from 'react';
+import MovieRow from './MovieRow';
+import MovieDetails from './MovieDetails';
 import Header from './Header';
 import Footer from './Footer';
-import { useSearchState, useSearchStateUpdate } from './SearchProvider';
+import { useSearchState, useSearchStateUpdate } from './DataProvider';
 import dataMovies from './data/movies';
 import dataGenres from './data/genres';
+import dataDetails from './data/details';
 
 function Movies() {
   let searchState = useSearchState();
@@ -67,6 +66,7 @@ function Movies() {
   };
 
   const fetchMovieDetails = async () => {
+    /*
     if (searchState.authToken === '') return;
     if (searchState.selectedMovieId !== '') {
       const movieDetailsResponse = await fetch(searchState.baseUrl + `/movies/${searchState.selectedMovieId}`, {
@@ -74,43 +74,20 @@ function Movies() {
       });
       const moviesDetailResponseJson = await movieDetailsResponse.json();
       searchUpdateState({ detailsArray: moviesDetailResponseJson });
+      console.log(moviesDetailResponseJson);
     }
+      */
+    const genresJson = dataDetails;
   };
 
   return (
     <>
       <div className='w-full mx-auto gap-4 p-4'>
         <Header />
-        <div className='flex gap-4 mt-4 overflow-x-auto no-scrollbar'>
-          <Poster />
-        </div>
+        <MovieRow />
         <Footer />
       </div>
-      <Modal isOpen={searchState.selectedMovieId !== ''} onClose={() => searchUpdateState({ selectedMovieId: '' })} title={searchState.detailsArray.title} poster={searchState.detailsArray.posterUrl} rating={searchState.detailsArray.rating}>
-        <div className='mb-2 text-xl'>{searchState.detailsArray.summary}</div>
-        <div className='mb-2'>
-          <span className='font-semibold pr-2'>Published:</span>
-          {searchState.detailsArray.datePublished ? format(searchState.detailsArray.datePublished, 'MMMM dd, yyyy') : undefined}
-        </div>
-        <div className='mb-2 flex flex-row'>
-          <span className='font-semibold pr-2'>Starring:</span>
-          {searchState.detailsArray.mainActors?.map((o, i) => (
-            <>
-              {o}
-              {i < searchState.detailsArray.mainActors.length - 1 && <>,&nbsp;</>}
-            </>
-          ))}
-        </div>
-        <div className='mb-2 flex flex-row'>
-          <span className='font-semibold pr-2'>Writers:</span>
-          {searchState.detailsArray.writers?.map((o, i) => (
-            <>
-              {o}
-              {i < searchState.detailsArray.writers.length - 1 && <>,&nbsp;</>}
-            </>
-          ))}
-        </div>
-      </Modal>
+      <MovieDetails />
     </>
   );
 }

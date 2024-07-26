@@ -4,7 +4,6 @@ import { SquareX } from 'lucide-react';
 // move poster and rating later out to be generic modal component.
 const Modal = ({ isOpen, onClose, title, poster, rating, children }) => {
   if (!isOpen) return null;
-
   return (
     <div className='fixed inset-5 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none'>
       <div className='fixed inset-0 bg-black opacity-50' onClick={onClose}></div>

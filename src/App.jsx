@@ -1,12 +1,12 @@
 import './App.css';
 import Movies from './Movies';
-import { SearchProvider } from './SearchProvider';
+import { DataProvider } from './DataProvider';
 
 function App() {
   return (
-    <SearchProvider>
+    <DataProvider>
       <Movies />
-    </SearchProvider>
+    </DataProvider>
   );
 }
 

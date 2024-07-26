@@ -1,4 +1,4 @@
-import { useSearchState, useSearchStateUpdate } from './SearchProvider';
+import { useSearchState, useSearchStateUpdate } from './DataProvider';
 
 function Pagination() {
   let searchState = useSearchState();

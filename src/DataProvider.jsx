@@ -12,7 +12,7 @@ export function useSearchStateUpdate() {
   return useContext(SearchContextUpdate);
 }
 
-export function SearchProvider({ children }) {
+export function DataProvider({ children }) {
   const [searchState, setSearchState] = useState({
     baseUrl: 'https://0kadddxyh3.execute-api.us-east-1.amazonaws.com',
     authToken: '',
@@ -22,9 +22,6 @@ export function SearchProvider({ children }) {
     pageSize: 25,
     pageCount: 0,
     pageNow: 0,
-    moviesArray: [],
-    genresArray: [],
-    detailsArray: [],
     selectedMovieId: '',
   });
 
