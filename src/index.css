@@ -19,6 +19,22 @@ body {
   animation: kenBurns 50s linear 1s infinite reverse;
 }
 
+.spinner {
+  width: 2em;
+  height: 2em;
+  cursor: not-allowed;
+  border-radius: 50%;
+  border: 0 solid #444;
+  box-shadow: -10px -10px 25px 10px #6359f8, 10px -10px 25px 10px #9c32e2, 10px 10px 25px 10px #ff0b0b, -10px 10px 25px 10px #ff9500;
+  animation: rot55 1s linear infinite;
+}
+
+@keyframes rot55 {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @keyframes kenBurns {
   0% {
     background-size: 100%;

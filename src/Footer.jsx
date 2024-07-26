@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import { useSearchState, useSearchStateUpdate } from './SearchProvider';
 import Pagination from './Pagination';
 

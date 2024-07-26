@@ -25,13 +25,11 @@ function Header() {
   );
 
   return (
-    <div className='flex flex-row justify-center gap-4'>
-      <h1 className='uppercase font-extrabold text-4xl text-slate-700'>
-        MOVIE<span className='bg-gradient-to-br from-pink-500 to-purple-500 bg-clip-text text-transparent'>SEARCH</span>
-      </h1>
+    <div className='flex flex-row justify-center items-center gap-4'>
+      <h1 className='uppercase font-extrabold text-5xl bg-gradient-to-l from-[#6359f8] via-[#9c32e2] via-[#ff0b0b] via-[#ff6d00] to-[#ffb700] text-transparent bg-clip-text'>MOVIES</h1>
       <input className='text-xl flex-grow px-4 py-2 text-slate-500 bg-slate-100 border-slate-200 border-2 rounded-xl focus:outline-none' type='text' placeholder='Search movie titles...' onChange={(e) => debouncedSearch(e.target.value)} maxLength={25} />
       <select onChange={(e) => searchUpdateState({ genreString: e.target.value })} className='min-w-48 focus:outline-none cursor-pointer text-slate-500 px-4 py-2 bg-slate-100 border-2 border-slate-200 rounded-xl'>
-        <option value=''>Movie Genre</option>
+        <option value=''>Genre</option>
         {searchState.genresArray.map((genre) => (
           <option key={genre.id} value={genre.title}>
             {genre.title}

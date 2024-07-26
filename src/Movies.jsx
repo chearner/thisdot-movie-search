@@ -1,5 +1,4 @@
-/* eslint-disable no-undef */
-import { useState, useEffect, useCallback, Suspense } from 'react';
+import { useEffect, Suspense } from 'react';
 import Modal from './Modal';
 import Loading from './Loading';
 import { format } from 'date-fns';
@@ -7,6 +6,8 @@ import Poster from './Poster';
 import Header from './Header';
 import Footer from './Footer';
 import { useSearchState, useSearchStateUpdate } from './SearchProvider';
+import dataMovies from './data/movies';
+import dataGenres from './data/genres';
 
 function Movies() {
   let searchState = useSearchState();
@@ -14,6 +15,7 @@ function Movies() {
 
   useEffect(() => {
     const fetchTokenAndGenres = async () => {
+      /*
       const tokenResponse = await fetch(`${searchState.baseUrl}/auth/token`, {
         headers: { 'Content-Type': 'application/json' },
       });
@@ -23,8 +25,9 @@ function Movies() {
         headers: { Authorization: `Bearer ${tokenJson.token}` },
       });
       const genresJson = await genresResponse.json();
+      */
+      const genresJson = dataGenres;
       searchUpdateState({ genresArray: genresJson.data });
-      console.log(genresJson);
     };
     fetchTokenAndGenres();
   }, []);
@@ -47,6 +50,7 @@ function Movies() {
     if (searchState.searchString?.length <= 2) {
       searchUpdateState({ moviesArray: [], pageNow: 1, pageCount: 0, movieCount: 0 });
     } else {
+      /*
       const moviesResponse = await fetch(searchState.baseUrl + `/movies?search=${searchState.searchString}&page=${searchState.pageNow}&limit=${searchState.pageSize}&genre=${searchState.genreString}`, {
         headers: { Authorization: `Bearer ${searchState.authToken}` },
       });
@@ -55,6 +59,9 @@ function Movies() {
         headers: { Authorization: `Bearer ${searchState.authToken}` },
       });
       const moviesCountJson = await moviesCount.json();
+      */
+      const moviesResponseJson = dataMovies;
+      const moviesCountJson = dataMovies;
       searchUpdateState({ moviesArray: moviesResponseJson.data, pageCount: moviesResponseJson.totalPages, movieCount: moviesCountJson.data.length });
     }
   };
@@ -72,11 +79,11 @@ function Movies() {
 
   return (
     <>
-      <div className='max-w-5xl mx-auto gap-4 p-4'>
+      <div className='w-full mx-auto gap-4 p-4'>
         <Header />
-        <Suspense fallback={<Loading />}>
+        <div className='flex gap-4 mt-4 overflow-x-auto no-scrollbar'>
           <Poster />
-        </Suspense>
+        </div>
         <Footer />
       </div>
       <Modal isOpen={searchState.selectedMovieId !== ''} onClose={() => searchUpdateState({ selectedMovieId: '' })} title={searchState.detailsArray.title} poster={searchState.detailsArray.posterUrl} rating={searchState.detailsArray.rating}>
