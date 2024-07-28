@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
-import MovieRow from './MovieRow';
+import MoviesRow from './MoviesRow';
 import MovieDetails from './MovieDetails';
 import Header from './Header';
 import Footer from './Footer';
-import { useSearchState, useSearchStateUpdate } from './DataProvider';
+import { useSearchState, useSearchStateUpdate } from './ContextProvider';
 import dataMovies from './data/movies';
 import dataGenres from './data/genres';
 import dataDetails from './data/details';
 
-function Movies() {
+function MoviesPage() {
   let searchState = useSearchState();
   let searchUpdateState = useSearchStateUpdate();
 
@@ -32,10 +32,12 @@ function Movies() {
   }, []);
 
   useEffect(() => {
+    console.log('fetch');
     fetchMovies();
   }, [searchState.searchString, searchState.genreString, searchState.pageNow]);
 
   useEffect(() => {
+    console.log('page now to 1');
     searchUpdateState({ pageNow: 1 });
     fetchMovies();
   }, [searchState.pageSize]);
@@ -45,11 +47,10 @@ function Movies() {
   }, [searchState.selectedMovieId]);
 
   const fetchMovies = async () => {
-    if (searchState.authToken === '') return;
-    if (searchState.searchString?.length <= 2) {
+    /*
+    if (searchState.authToken === '' || searchState.searchString?.length <= 2) {
       searchUpdateState({ moviesArray: [], pageNow: 1, pageCount: 0, movieCount: 0 });
     } else {
-      /*
       const moviesResponse = await fetch(searchState.baseUrl + `/movies?search=${searchState.searchString}&page=${searchState.pageNow}&limit=${searchState.pageSize}&genre=${searchState.genreString}`, {
         headers: { Authorization: `Bearer ${searchState.authToken}` },
       });
@@ -58,11 +59,11 @@ function Movies() {
         headers: { Authorization: `Bearer ${searchState.authToken}` },
       });
       const moviesCountJson = await moviesCount.json();
-      */
       const moviesResponseJson = dataMovies;
       const moviesCountJson = dataMovies;
       searchUpdateState({ moviesArray: moviesResponseJson.data, pageCount: moviesResponseJson.totalPages, movieCount: moviesCountJson.data.length });
     }
+       */
   };
 
   const fetchMovieDetails = async () => {
@@ -84,7 +85,7 @@ function Movies() {
     <>
       <div className='w-full mx-auto gap-4 p-4'>
         <Header />
-        <MovieRow />
+        <MoviesRow />
         <Footer />
       </div>
       <MovieDetails />
@@ -92,4 +93,4 @@ function Movies() {
   );
 }
 
-export default Movies;
+export default MoviesPage;

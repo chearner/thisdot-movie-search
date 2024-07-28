@@ -1,12 +1,12 @@
 import './App.css';
-import Movies from './Movies';
-import { DataProvider } from './DataProvider';
+import MoviesPage from './MoviesPage';
+import ContextProvider from './ContextProvider';
 
 function App() {
   return (
-    <DataProvider>
-      <Movies />
-    </DataProvider>
+    <ContextProvider>
+      <MoviesPage />
+    </ContextProvider>
   );
 }
 

@@ -1,4 +1,4 @@
-import { useSearchState, useSearchStateUpdate } from './DataProvider';
+import { useSearchState, useSearchStateUpdate } from './../ContextProvider';
 
 function Pagination() {
   let searchState = useSearchState();
@@ -14,7 +14,7 @@ function Pagination() {
           </a>
         </li>
       );
-    } else if (i >= searchState.pageNow - 3 && i <= searchState.pageNow + 3) {
+    } else if (i >= searchState.pageNow - 2 && i <= searchState.pageNow + 2) {
       pageLinks.push(
         <li key={i} className='flex items-center rounded-xl border-black border-2' onClick={() => searchUpdateState({ pageNow: i })}>
           <a href='#' className='p-2 focus:outline-none' title={`Show Page ${i}`}>
@@ -25,7 +25,7 @@ function Pagination() {
     }
   }
 
-  if (searchState.pageNow + 3 <= searchState.pageCount) {
+  if (searchState.pageNow + 2 <= searchState.pageCount) {
     pageLinks.push(
       <li key='123' className='text-black font-bold focus:outline-none flex items-center'>
         ...
@@ -33,7 +33,7 @@ function Pagination() {
     );
   }
 
-  if (searchState.pageNow - 3 >= 1) {
+  if (searchState.pageNow - 2 >= 1) {
     pageLinks.unshift(
       <li key='321' className='text-black font-bold focus:outline-none flex items-center'>
         ...

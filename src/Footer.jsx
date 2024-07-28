@@ -1,5 +1,5 @@
-import { useSearchState, useSearchStateUpdate } from './DataProvider';
-import Pagination from './Pagination';
+import { useSearchState, useSearchStateUpdate } from './ContextProvider';
+import Pagination from './components/Pagination';
 
 function Footer() {
   let searchState = useSearchState();
@@ -18,7 +18,7 @@ function Footer() {
         Per Page
       </div>
       <div className=''>{searchState.movieCount > 0 ? `${searchState.movieCount} Movies` : ``}</div>
-      <div className=''>{searchState.pageSize != 1000 ? <Pagination /> : ''}</div>
+      <div className={`transition-opacity duration-500 ease-in-out ${searchState.pageCount > 1 ? 'opacity-100' : 'opacity-0'}`}>{searchState.pageSize != 1000 ? <Pagination /> : ''}</div>
     </div>
   );
 }

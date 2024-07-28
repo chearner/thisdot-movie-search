@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
-import { useSearchState, useSearchStateUpdate } from './DataProvider';
+import { useSearchState, useSearchStateUpdate } from './ContextProvider';
 import DataLoader from './DataLoader';
-import Modal from './Modal';
+import Modal from './components/Modal';
 import { format } from 'date-fns';
 import dataDetails from './data/details';
 
