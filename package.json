@@ -11,10 +11,14 @@
   },
   "dependencies": {
     "@tailwindui/react": "^0.1.1",
+    "@tanstack/react-query": "^5.51.15",
+    "@tanstack/react-query-devtools": "^5.51.15",
+    "axios": "^1.7.2",
     "date-fns": "^3.6.0",
     "lucide-react": "^0.408.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-router-dom": "^6.25.1",
     "tailwind-merge": "^2.4.0",
     "tailwindcss-animate": "^1.0.7"
   },

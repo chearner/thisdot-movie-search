@@ -1,12 +1,14 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import MoviesRow from './MoviesRow';
 import MovieDetails from './MovieDetails';
 import Header from './Header';
+import SearchRow from './SearchRow';
 import Footer from './Footer';
 import { useSearchState, useSearchStateUpdate } from './ContextProvider';
 import dataMovies from './data/movies';
 import dataGenres from './data/genres';
 import dataDetails from './data/details';
+import api from './services/api';
 
 function MoviesPage() {
   let searchState = useSearchState();
@@ -85,6 +87,7 @@ function MoviesPage() {
     <>
       <div className='w-full mx-auto gap-4 p-4'>
         <Header />
+        <SearchRow />
         <MoviesRow />
         <Footer />
       </div>

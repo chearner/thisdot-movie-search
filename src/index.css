@@ -3,7 +3,8 @@
 @tailwind utilities;
 
 body {
-  background: white;
+  background: #e8e8e8;
+  font-family: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
 .no-scrollbar::-webkit-scrollbar {
