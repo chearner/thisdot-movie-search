@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
-import { useSearchState, useSearchStateUpdate } from '../ContextProvider';
+import { useSearchState, useSearchStateUpdate } from './context/Provider';
 
-function InputSearch() {
+function Search() {
   let searchState = useSearchState();
   let searchUpdateState = useSearchStateUpdate();
 
@@ -24,6 +24,6 @@ function InputSearch() {
     [searchState.authToken]
   );
 
-  return <input className='flex-grow px-4 py-2 text-slate-500 bg-slate-100 border-slate-200 border-2 rounded-xl focus:outline-none' type='text' placeholder='Search movie titles...' onChange={(e) => debouncedSearch(e.target.value)} maxLength={25} />;
+  return <input onChange={(e) => debouncedSearch(e.target.value)} placeholder='Search movie titles...' maxLength={25} className='input input-bordered flex-grow' />;
 }
-export default InputSearch;
+export default Search;

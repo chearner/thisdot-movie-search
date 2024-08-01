@@ -1,10 +1,9 @@
-import api from './services/api';
 import Login from './Login';
-import MoviesPage from './MoviesPage';
-import ContextProvider from './ContextProvider';
+import Movies from './Movies';
+import { useAuth } from './hooks/useAuth';
 
 function App() {
-  return <ContextProvider>{api.isAuthenticated() ? <MoviesPage /> : <Login />}</ContextProvider>;
+  return <>{useAuth().isAuthenticated() ? <Movies /> : <Login />}</>;
 }
 
 export default App;

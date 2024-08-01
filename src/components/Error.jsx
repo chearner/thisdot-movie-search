@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
-function Error(props) {
-  console.log(props);
+export default function Error(props) {
   return (
     <>
-      <div>Error...</div>
+      <div>Error...{props.message}</div>
     </>
   );
 }
-
-export default Error;

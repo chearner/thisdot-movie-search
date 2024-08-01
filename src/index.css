@@ -3,8 +3,14 @@
 @tailwind utilities;
 
 body {
-  background: #e8e8e8;
-  font-family: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
 .no-scrollbar::-webkit-scrollbar {
@@ -18,22 +24,6 @@ body {
 
 .bg-ken-burns {
   animation: kenBurns 50s linear 1s infinite reverse;
-}
-
-.spinner {
-  width: 2em;
-  height: 2em;
-  cursor: not-allowed;
-  border-radius: 50%;
-  border: 0 solid #444;
-  box-shadow: -10px -10px 25px 10px #6359f8, 10px -10px 25px 10px #9c32e2, 10px 10px 25px 10px #ff0b0b, -10px 10px 25px 10px #ff9500;
-  animation: rot55 1s linear infinite;
-}
-
-@keyframes rot55 {
-  to {
-    transform: rotate(360deg);
-  }
 }
 
 @keyframes kenBurns {

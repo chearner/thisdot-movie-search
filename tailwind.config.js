@@ -7,8 +7,12 @@ module.exports = {
   darkMode: ['class'],
   content: ['./pages/**/*.{js,jsx}', './components/**/*.{js,jsx}', './app/**/*.{js,jsx}', './src/**/*.{js,jsx}'],
   prefix: '',
+  plugins: [require('tailwindcss-animate'), require('daisyui')],
   varients: {
     animation: ['hover', 'group-hover'],
+  },
+  daisyui: {
+    themes: ['acid', 'light', 'dark'],
   },
   theme: {
     container: {
@@ -75,5 +79,4 @@ module.exports = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
 };
