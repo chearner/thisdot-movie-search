@@ -15,25 +15,26 @@ function Movies() {
   const [searchGenre, setSearchGenre] = useState('');
   const [movieId, setMovieId] = useState('');
 
-  const changePageSize = async (e) => {
+  const changePageSize = (e) => {
     e.preventDefault();
     setPageNow(1);
     setPageSize(e.target.value);
   };
 
-  const changePageNow = async (e, page) => {
-    e.preventDefault();
+  const changePageNow = (page) => {
     setPageNow(page);
   };
 
-  const changeSearchGenre = async (e) => {
+  const changeSearchGenre = (e) => {
     e.preventDefault();
     console.log(e.target.value);
     setSearchGenre(e.target.value);
   };
 
-  const showMovieDetails = (id) => {
+  const showMovieDetails = async (id) => {
     console.log(id);
+    await setMovieId(id);
+    document.getElementById('movie-details').checked = true;
   };
 
   const debounce = (func, wait) => {
@@ -63,16 +64,14 @@ function Movies() {
   });
 
   let pageLinks = [];
-  for (let i = 1; i <= movies.totalPages; i++) {
-    if (i == pageNow) {
-      pageLinks.push(<input key={i} className='join-item btn btn-square' type='radio' name='options' aria-label={i} defaultChecked />);
-    } else {
-      pageLinks.push(<input key={i} className='join-item btn btn-square' type='radio' name='options' aria-label={i} onClick={() => changePageNow(i)} />);
-    }
-  }
-
   if (movies.isSuccess) {
-    console.log(movies.data);
+    for (let i = 1; i <= movies.data.totalPages; i++) {
+      if (i == pageNow) {
+        pageLinks.push(<input key={i} className='join-item btn btn-square' type='radio' name='options' aria-label={i} defaultChecked />);
+      } else {
+        pageLinks.push(<input key={i} className='join-item btn btn-square' type='radio' name='options' aria-label={i} onClick={() => changePageNow(i)} />);
+      }
+    }
   }
 
   if (movies.isLoading) return <Loading />;
@@ -82,7 +81,10 @@ function Movies() {
       <div className='w-full mx-auto gap-4 p-4'>
         <header className='flex flex-row justify-center items-center gap-4 pb-2'>
           <h1 className='max-w-fit uppercase font-extrabold text-5xl bg-gradient-to-l from-[#6359f8] via-[#9c32e2] via-[#ff0b0b] via-[#ff6d00] to-[#ffb700] text-transparent bg-clip-text'>MOVIES</h1>
-          <input onChange={(e) => debouncedSearch(e)} placeholder='Search movie titles...' maxLength={25} className='input input-bordered flex-grow' />
+          <span className='flex-grow relative'>
+            <input onChange={(e) => debouncedSearch(e)} placeholder='Search movie titles...' maxLength={25} className='input input-bordered w-full' />
+            <div className='absolute inset-x-5 badge badge-neutral hidden'>{movies.data.data.length * movies.data.totalPages} Movies</div>
+          </span>
           <Genre onChange={(e) => changeSearchGenre(e)} value={searchGenre} />
           <Theme />
           <Logout />
@@ -90,7 +92,7 @@ function Movies() {
         <div className='flex gap-4 mt-4 overflow-x-auto no-scrollbar'>
           {movies.data
             ? movies.data.data.map((movie) => (
-                <div key={movie.id} className='card glass min-w-56 min-h-96' onClick={() => setMovieId(movie.id)}>
+                <div key={movie.id} className='card glass min-w-56 min-h-96' onClick={() => showMovieDetails(movie.id)}>
                   <div style={movie.posterUrl?.length ? { '--image-url': `url(${movie.posterUrl})` } : { '--image-url': `url(no-poster.webp)` }} className='card-body bg-[image:var(--image-url)] flex justify-between rounded-xl bg-cover bg-no-repeat'></div>
                   <div className='card-title text-sm font-bold p-4'>{movie.title}</div>
                 </div>
@@ -108,11 +110,15 @@ function Movies() {
             </select>
             Per Page
           </div>
-          <div className='badge badge-primary'>{movies.data.data.length} Movies</div>
           <div className=''>{pageSize != 1000 ? <div className='join'>{pageLinks.map((link) => link)}</div> : ''}</div>
         </div>
       </div>
-      {movieId !== '' ? <Details movieId={movieId} /> : undefined}
+      {movieId !== '' ? (
+        <>
+          <input type='checkbox' className='modal-toggle' id='movie-details' />
+          <Details movieId={movieId} />
+        </>
+      ) : undefined}
     </>
   );
 }

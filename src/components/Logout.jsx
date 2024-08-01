@@ -3,7 +3,7 @@ import { useAuth } from '../hooks/useAuth';
 
 function Logout() {
   return (
-    <button className='btn btn-accent' onClick={useAuth().logout}>
+    <button className='btn btn-neutral' onClick={useAuth().logout}>
       Log Out
     </button>
   );

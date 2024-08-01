@@ -14,34 +14,30 @@ function Details(props) {
     placeholderData: keepPreviousData,
   });
 
-  if (details.isSuccess) {
-    console.log(details.data);
-  }
-
   if (details.isLoading) return <Loading />;
 
   return (
-    <Modal title={details.data.title} poster={details.data.posterUrl} rating={details.data.rating} showModal={true}>
-      <p className='mb-2 text-xl'>{details.data.summary}</p>
+    <Modal title={details.data?.title} poster={details.data?.posterUrl} rating={details.data?.rating}>
+      <p className='mb-2 text-xl'>{details.data?.summary}</p>
       <p className='mb-2'>
         <span className='font-semibold pr-2'>Published:</span>
-        {details.data.datePublished ? format(details.data.datePublished, 'MMMM dd, yyyy') : undefined}
+        {details.data?.datePublished ? format(details.data?.datePublished, 'MMMM dd, yyyy') : undefined}
       </p>
       <p className='mb-2 flex flex-row'>
         <span className='font-semibold pr-2'>Starring:</span>
-        {details.data.mainActors?.map((o, i) => (
+        {details.data?.mainActors?.map((o, i) => (
           <span key={'actor' + o}>
             {o}
-            {i < details.data.mainActors.length - 1 && <>,&nbsp;</>}
+            {i < details.data?.mainActors.length - 1 && <>,&nbsp;</>}
           </span>
         ))}
       </p>
       <p className='mb-2 flex flex-row'>
         <span className='font-semibold pr-2'>Writers:</span>
-        {details.data.writers?.map((o, i) => (
+        {details.data?.writers?.map((o, i) => (
           <span key={'writer' + o}>
             {o}
-            {i < details.data.writers.length - 1 && <>,&nbsp;</>}
+            {i < details.data?.writers.length - 1 && <>,&nbsp;</>}
           </span>
         ))}
       </p>

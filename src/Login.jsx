@@ -33,7 +33,7 @@ export default function Login() {
       <div className='flex flex-col h-screen justify-center items-center text-center text-gray-600'>
         <div className='text-center space-y-2'>
           <h1 className='mx-auto max-w-fit uppercase font-extrabold text-5xl bg-gradient-to-l from-[#6359f8] via-[#9c32e2] via-[#ff0b0b] via-[#ff6d00] to-[#ffb700] text-transparent bg-clip-text'>MOVIES</h1>
-          <p className='max-w-lg'>Search for your favorite movies. Use any email and password. Demostration purposes only.</p>
+          <p className='max-w-lg'>Search for your favorite movies. Application built with React, React Query, Tailwind and DaisyUI for demostration purposes only. Use any email and password to login.</p>
         </div>
         <form className='max-w-sm space-y-4' action='#' onSubmit={handleLogin}>
           <label className='sr-only' htmlFor='username'>
@@ -54,7 +54,7 @@ export default function Login() {
               Create one
             </a>
           </div>
-          <button className='btn btn-accent' onClick={handleLogin} type='submit'>
+          <button className='btn btn-neutral' onClick={handleLogin} type='submit'>
             Sign In
           </button>
         </form>
