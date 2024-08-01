@@ -27,12 +27,10 @@ function Movies() {
 
   const changeSearchGenre = (e) => {
     e.preventDefault();
-    console.log(e.target.value);
     setSearchGenre(e.target.value);
   };
 
   const showMovieDetails = async (id) => {
-    console.log(id);
     await setMovieId(id);
     document.getElementById('movie-details').checked = true;
   };
@@ -93,8 +91,11 @@ function Movies() {
           {movies.data
             ? movies.data.data.map((movie) => (
                 <div key={movie.id} className='card glass min-w-56 min-h-96' onClick={() => showMovieDetails(movie.id)}>
-                  <div style={movie.posterUrl?.length ? { '--image-url': `url(${movie.posterUrl})` } : { '--image-url': `url(no-poster.webp)` }} className='card-body bg-[image:var(--image-url)] flex justify-between rounded-xl bg-cover bg-no-repeat'></div>
-                  <div className='card-title text-sm font-bold p-4'>{movie.title}</div>
+                  <div className=''>
+                    <div className='poster-overlay'></div>
+                    <img src={movie.posterUrl ? movie.posterUrl : './no-poster.webp'} className='poster' alt={movie.title} />
+                  </div>
+                  <div className='card-title text-sm font-bold p-4 z-10 bottom-0 h-full items-end'>{movie.title}</div>
                 </div>
               ))
             : undefined}

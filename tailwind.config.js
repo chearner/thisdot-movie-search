@@ -12,7 +12,7 @@ module.exports = {
     animation: ['hover', 'group-hover'],
   },
   daisyui: {
-    themes: ['acid', 'light', 'dark'],
+    themes: ['dark', 'light', 'acid'],
   },
   theme: {
     container: {
