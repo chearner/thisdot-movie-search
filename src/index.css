@@ -13,6 +13,22 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
+.color-blobs {
+  animation: colorBlobs 8s linear infinite;
+  background: conic-gradient(from 0deg, #08f, #f60, #bbffa1, #4c00ff, #ab2666, #09f);
+}
+
+.svg {
+  fill: white !important;
+}
+
+.modal-box {
+  min-width: 60% !important;
+  min-height: 80% !important;
+  max-width: 60% !important;
+  max-height: 80% !important;
+}
+
 .poster-overlay {
   position: absolute;
   z-index: 9;
@@ -43,7 +59,7 @@ code {
 }
 
 .bg-ken-burns {
-  animation: kenBurns 50s linear 1s infinite reverse;
+  animation: kenBurns 200s linear 1s infinite reverse;
 }
 
 @keyframes kenBurns {
@@ -66,5 +82,14 @@ code {
   100% {
     background-size: 100%;
     background-position: top left;
+  }
+}
+
+@keyframes colorBlobs {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg) scale(2);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(1turn) scale(2);
   }
 }

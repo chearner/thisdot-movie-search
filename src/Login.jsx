@@ -3,6 +3,7 @@ import { getToken } from './api/token';
 import { useApiGet } from './hooks/useApi';
 import Loading from './components/Loading';
 import Error from './components/Error';
+import Blob from './components/Blob';
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -30,8 +31,9 @@ export default function Login() {
 
   return (
     <div className='login'>
-      <div className='flex flex-col h-screen justify-center items-center text-center text-gray-600'>
-        <div className='text-center space-y-2'>
+      <Blob />
+      <div className='flex flex-col h-screen justify-center items-center text-center'>
+        <div className='space-y-2'>
           <h1 className='mx-auto max-w-fit uppercase font-extrabold text-5xl bg-gradient-to-l from-[#6359f8] via-[#9c32e2] via-[#ff0b0b] via-[#ff6d00] to-[#ffb700] text-transparent bg-clip-text'>MOVIES</h1>
           <p className='max-w-lg'>Search for your favorite movies. Application built with React, React Query, Tailwind and DaisyUI for demostration purposes only. Use any email and password to login.</p>
         </div>
