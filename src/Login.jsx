@@ -4,6 +4,7 @@ import { useApiGet } from './hooks/useApi';
 import Loading from './components/Loading';
 import Error from './components/Error';
 import Blob from './components/Blob';
+import Footer from './components/Footer';
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -31,7 +32,7 @@ export default function Login() {
 
   return (
     <div className='login'>
-      <Blob />
+      <Blob opacity={0.6} />
       <div className='flex flex-col h-screen justify-center items-center text-center'>
         <div className='space-y-2'>
           <h1 className='mx-auto max-w-fit uppercase font-extrabold text-5xl bg-gradient-to-l from-[#6359f8] via-[#9c32e2] via-[#ff0b0b] via-[#ff6d00] to-[#ffb700] text-transparent bg-clip-text'>MOVIES</h1>
@@ -50,16 +51,11 @@ export default function Login() {
           <div className='relative'>
             <input placeholder='Password' id='password' type='password' value={password} onChange={(e) => setPassword(e.target.value)} maxLength={25} className='input input-bordered' />
           </div>
-          <div className=''>
-            No account yet?{' '}
-            <a href='#' className='underline'>
-              Create one
-            </a>
-          </div>
           <button className='btn btn-neutral' onClick={handleLogin} type='submit'>
             Sign In
           </button>
         </form>
+        <Footer />
       </div>
     </div>
   );
