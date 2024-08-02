@@ -96,7 +96,7 @@ function Movies() {
                 <div key={movie.id} className='card glass min-w-56 min-h-96' onClick={() => showMovieDetails(movie.id)}>
                   <div className=''>
                     <div className='poster-overlay'></div>
-                    <img src={movie.posterUrl ? movie.posterUrl : './no-poster.jpg'} className='poster' alt={movie.title} />
+                    <img src={movie.posterUrl ? movie.posterUrl : `./no-poster-${Math.floor(Math.random() * 2) + 1}.jpg`} className='poster' alt={movie.title} />
                   </div>
                   <div className='card-title text-sm font-bold p-4 z-10 bottom-0 h-full items-end'>{movie.title}</div>
                 </div>

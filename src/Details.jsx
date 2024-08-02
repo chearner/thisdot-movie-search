@@ -17,7 +17,7 @@ function Details(props) {
   if (details.isLoading) return <Loading />;
 
   return (
-    <Modal title={details.data?.title} poster={details.data?.posterUrl} rating={details.data?.rating}>
+    <Modal title={details.data?.title} poster={details.data?.posterUrl ? details.data?.posterUrl : `./no-poster-${Math.floor(Math.random() * 2) + 1}.jpg`} rating={details.data?.rating}>
       <p className='mb-2 text-xl'>{details.data?.summary}</p>
       <p className='mb-2'>
         <span className='font-semibold pr-2'>Published:</span>
